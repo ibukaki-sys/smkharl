@@ -2,146 +2,338 @@
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0d1f42">
+<meta name="description" content="Sistem Dalam Talian SMK Haji Abdul Rahman Limbong">
+<title>SMK HARL — Sistem Dalam Talian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: transparent; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  .aero-wrap {
-    background: linear-gradient(160deg, #1a3a6b 0%, #0d1f42 40%, #0a1628 100%);
-    border-radius: 18px;
-    padding: 20px 16px 18px;
-    position: relative;
-    overflow: hidden;
+  :root {
+    --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --bg-deep:    #070e1f;
+    --bg-mid:     #0d1f42;
+    --bg-top:     #1a3a6b;
+    --glass-bg:   rgba(255,255,255,0.07);
+    --glass-bdr:  rgba(255,255,255,0.13);
+    --glass-hi:   rgba(255,255,255,0.10);
+    --text-1:     rgba(255,255,255,0.95);
+    --text-2:     rgba(255,255,255,0.55);
+    --text-3:     rgba(255,255,255,0.28);
+    --accent:     #4fc3f7;
   }
-  .aero-wrap::before {
+
+  html {
+    height: 100%;
+    background: var(--bg-deep);
+  }
+
+  body {
+    min-height: 100%;
+    font-family: var(--font);
+    background: radial-gradient(ellipse 120% 80% at 60% -10%, #1e4080 0%, var(--bg-deep) 65%);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+    overflow-x: hidden;
+  }
+
+  /* stars */
+  body::before {
     content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 50%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%);
-    pointer-events: none; border-radius: 18px 18px 0 0;
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,0.55) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 8%,  rgba(255,255,255,0.45) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 30%, rgba(255,255,255,0.3)  0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.4)  0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 55%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 65%, rgba(255,255,255,0.35) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,0.2)  0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.3)  0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
   }
-  .aero-orb { position: absolute; border-radius: 50%; pointer-events: none; }
-  .orb1 { width: 180px; height: 180px; background: radial-gradient(circle, rgba(80,140,255,0.18) 0%, transparent 70%); top: -40px; right: -20px; }
-  .orb2 { width: 120px; height: 120px; background: radial-gradient(circle, rgba(100,200,255,0.12) 0%, transparent 70%); bottom: 20px; left: -10px; }
 
-  .aero-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 20px; padding: 3px 10px 3px 6px;
-    font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.75);
-    letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 8px;
+  .page {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    min-height: 100svh;
+    padding: 32px 16px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
-  .aero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4fc3f7; flex-shrink: 0; }
-  .aero-title { font-size: 20px; font-weight: 700; color: #fff; line-height: 1.15; letter-spacing: -0.3px; }
-  .aero-sub { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
-  .aero-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent); margin: 14px 0; }
 
-  .aero-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 9px; }
+  /* orbs */
+  .orb {
+    position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
+    filter: blur(60px);
+  }
+  .orb-1 { width: 300px; height: 300px; background: rgba(56,120,255,0.15); top: -80px; right: -60px; }
+  .orb-2 { width: 200px; height: 200px; background: rgba(79,195,247,0.10); bottom: 60px; left: -60px; }
 
-  .aero-card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.05) 100%);
-    border: 1px solid rgba(255,255,255,0.18); border-radius: 14px;
-    padding: 13px 11px 11px; text-decoration: none;
-    display: flex; flex-direction: column; gap: 9px;
-    min-height: 108px; position: relative; overflow: hidden;
-    transition: background 0.2s, border-color 0.2s;
+  /* header */
+  .header { margin-bottom: 28px; }
+
+  .school-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-bdr);
+    border-radius: 999px;
+    padding: 4px 12px 4px 8px;
+    margin-bottom: 14px;
+  }
+  .school-tag-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    flex-shrink: 0;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .school-tag-text {
+    font-size: 10px; font-weight: 600;
+    color: var(--text-2);
+    letter-spacing: 0.07em; text-transform: uppercase;
+  }
+
+  .title {
+    font-size: clamp(22px, 6vw, 28px);
+    font-weight: 700;
+    color: var(--text-1);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .title span {
+    background: linear-gradient(90deg, #fff 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--text-2);
+    font-weight: 400;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--glass-bdr) 30%, var(--glass-bdr) 70%, transparent 100%);
+    margin: 20px 0;
+  }
+
+  /* section label */
+  .section-label {
+    font-size: 10px; font-weight: 600;
+    color: var(--text-3);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  /* card */
+  .card {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-bdr);
+    border-radius: 16px;
+    padding: 14px 12px 12px;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 10px;
+    min-height: 110px;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
     -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
   }
-  .aero-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 40%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.09) 0%, transparent 100%);
-    border-radius: 14px 14px 0 0; pointer-events: none;
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
   }
-  .aero-card:active { background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%); }
-  .aero-card-top { display: flex; align-items: flex-start; justify-content: space-between; }
-  .aero-icon {
-    width: 38px; height: 38px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 19px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.2);
+  .card::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    border-radius: 16px;
   }
-  .aero-ext { font-size: 13px; color: rgba(255,255,255,0.3); }
-  .aero-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.92); line-height: 1.35; }
-  .aero-url { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .card:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.10); }
+  .card:active { transform: scale(0.97); background: rgba(255,255,255,0.05); }
 
-  .aero-wide { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 13px; min-height: auto; padding: 12px 14px; }
-  .aero-wide .aero-body { flex: 1; min-width: 0; }
-  .aero-wide .aero-ext { margin-left: auto; flex-shrink: 0; }
-  .aero-footer { margin-top: 14px; text-align: center; font-size: 10px; color: rgba(255,255,255,0.22); letter-spacing: 0.06em; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+
+  .icon {
+    width: 40px; height: 40px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px; flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+    position: relative; z-index: 1;
+  }
+
+  .arrow { font-size: 14px; color: var(--text-3); position: relative; z-index: 1; }
+
+  .card-label {
+    font-size: 12.5px; font-weight: 600;
+    color: var(--text-1);
+    line-height: 1.3;
+    position: relative; z-index: 1;
+  }
+  .card-url {
+    font-size: 10px;
+    color: var(--text-3);
+    margin-top: 2px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    position: relative; z-index: 1;
+  }
+
+  /* wide card */
+  .card-wide {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    min-height: auto;
+    padding: 14px 16px;
+  }
+  .card-wide .card-body { flex: 1; min-width: 0; }
+  .card-wide .arrow { margin-left: auto; flex-shrink: 0; }
+
+  /* footer */
+  .footer {
+    margin-top: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .footer-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-3); }
+  .footer-text { font-size: 11px; color: var(--text-3); letter-spacing: 0.05em; }
+
+  /* stagger animation */
+  .card { opacity: 0; transform: translateY(12px); animation: fadeUp 0.4s ease forwards; }
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.10s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.20s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .header { opacity: 0; animation: fadeUp 0.5s ease 0s forwards; }
 </style>
 </head>
 <body>
 
-<div class="aero-wrap">
-  <div class="aero-orb orb1"></div>
-  <div class="aero-orb orb2"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
 
-  <div style="margin-bottom:16px;position:relative;">
-    <div class="aero-badge"><span class="aero-badge-dot"></span>SMK Haji Abdul Rahman Limbong</div>
-    <div class="aero-title">Sistem Dalam Talian</div>
-    <div class="aero-sub">5 aplikasi sekolah &mdash; satu tempat</div>
+<div class="page">
+
+  <div class="header">
+    <div class="school-tag">
+      <span class="school-tag-dot"></span>
+      <span class="school-tag-text">SMK Haji Abdul Rahman Limbong</span>
+    </div>
+    <h1 class="title">Sistem <span>Dalam Talian</span></h1>
+    <p class="subtitle">5 aplikasi sekolah &mdash; satu tempat</p>
   </div>
 
-  <div class="aero-divider"></div>
+  <div class="divider"></div>
 
-  <div class="aero-grid">
+  <p class="section-label">Aplikasi Aktif</p>
 
-    <a class="aero-card" href="https://limbonghadir.netlify.app" target="_blank">
-      <div class="aero-card-top">
-        <div class="aero-icon" style="background:linear-gradient(145deg,rgba(29,158,117,0.5),rgba(15,110,86,0.3));border-color:rgba(93,202,165,0.35);color:#9fe1cb;"><i class="ti ti-map-pin-check"></i></div>
-        <span class="aero-ext"><i class="ti ti-arrow-up-right"></i></span>
+  <div class="grid">
+
+    <a class="card" href="https://limbonghadir.netlify.app" target="_blank" rel="noopener">
+      <div class="card-top">
+        <div class="icon" style="background:linear-gradient(145deg,rgba(29,158,117,0.4),rgba(8,80,65,0.6));border-color:rgba(93,202,165,0.3);color:#9fe1cb;">
+          <i class="ti ti-map-pin-check" aria-hidden="true"></i>
+        </div>
+        <span class="arrow"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
       </div>
       <div>
-        <div class="aero-label">eKehadiran Tok Limbong</div>
-        <div class="aero-url">limbonghadir.netlify.app</div>
+        <div class="card-label">eKehadiran Tok Limbong</div>
+        <div class="card-url">limbonghadir.netlify.app</div>
       </div>
     </a>
 
-    <a class="aero-card" href="https://keberadaanguru.netlify.app" target="_blank">
-      <div class="aero-card-top">
-        <div class="aero-icon" style="background:linear-gradient(145deg,rgba(127,119,221,0.5),rgba(83,74,183,0.3));border-color:rgba(175,169,236,0.35);color:#cecbf6;"><i class="ti ti-user-check"></i></div>
-        <span class="aero-ext"><i class="ti ti-arrow-up-right"></i></span>
+    <a class="card" href="https://keberadaanguru.netlify.app" target="_blank" rel="noopener">
+      <div class="card-top">
+        <div class="icon" style="background:linear-gradient(145deg,rgba(127,119,221,0.4),rgba(60,52,137,0.6));border-color:rgba(175,169,236,0.3);color:#cecbf6;">
+          <i class="ti ti-user-check" aria-hidden="true"></i>
+        </div>
+        <span class="arrow"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
       </div>
       <div>
-        <div class="aero-label">Keberadaan Guru</div>
-        <div class="aero-url">keberadaanguru.netlify.app</div>
+        <div class="card-label">Keberadaan Guru</div>
+        <div class="card-url">keberadaanguru.netlify.app</div>
       </div>
     </a>
 
-    <a class="aero-card" href="https://ibukaki-sys.github.io/sistem-kehadiran" target="_blank">
-      <div class="aero-card-top">
-        <div class="aero-icon" style="background:linear-gradient(145deg,rgba(55,138,221,0.5),rgba(24,95,165,0.3));border-color:rgba(133,183,235,0.35);color:#b5d4f4;"><i class="ti ti-clipboard-list"></i></div>
-        <span class="aero-ext"><i class="ti ti-arrow-up-right"></i></span>
+    <a class="card" href="https://ibukaki-sys.github.io/sistem-kehadiran" target="_blank" rel="noopener">
+      <div class="card-top">
+        <div class="icon" style="background:linear-gradient(145deg,rgba(55,138,221,0.4),rgba(12,68,124,0.6));border-color:rgba(133,183,235,0.3);color:#b5d4f4;">
+          <i class="ti ti-clipboard-list" aria-hidden="true"></i>
+        </div>
+        <span class="arrow"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
       </div>
       <div>
-        <div class="aero-label">Kehadiran Program</div>
-        <div class="aero-url">ibukaki-sys.github.io</div>
+        <div class="card-label">Kehadiran Program</div>
+        <div class="card-url">ibukaki-sys.github.io</div>
       </div>
     </a>
 
-    <a class="aero-card" href="https://bukukawalan.netlify.app" target="_blank">
-      <div class="aero-card-top">
-        <div class="aero-icon" style="background:linear-gradient(145deg,rgba(186,117,23,0.5),rgba(133,79,11,0.3));border-color:rgba(239,159,39,0.35);color:#fac775;"><i class="ti ti-book-2"></i></div>
-        <span class="aero-ext"><i class="ti ti-arrow-up-right"></i></span>
+    <a class="card" href="https://bukukawalan.netlify.app" target="_blank" rel="noopener">
+      <div class="card-top">
+        <div class="icon" style="background:linear-gradient(145deg,rgba(186,117,23,0.4),rgba(99,56,6,0.6));border-color:rgba(239,159,39,0.3);color:#fac775;">
+          <i class="ti ti-book-2" aria-hidden="true"></i>
+        </div>
+        <span class="arrow"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
       </div>
       <div>
-        <div class="aero-label">Buku Kawalan Kelas</div>
-        <div class="aero-url">bukukawalan.netlify.app</div>
+        <div class="card-label">Buku Kawalan Kelas</div>
+        <div class="card-url">bukukawalan.netlify.app</div>
       </div>
     </a>
 
-    <a class="aero-card aero-wide" href="https://biliktempah.netlify.app" target="_blank">
-      <div class="aero-icon" style="background:linear-gradient(145deg,rgba(216,90,48,0.5),rgba(153,60,29,0.3));border-color:rgba(240,153,123,0.35);color:#f5c4b3;"><i class="ti ti-door"></i></div>
-      <div class="aero-body">
-        <div class="aero-label">Sistem Tempahan Bilik</div>
-        <div class="aero-url">biliktempah.netlify.app</div>
+    <a class="card card-wide" href="https://biliktempah.netlify.app" target="_blank" rel="noopener">
+      <div class="icon" style="background:linear-gradient(145deg,rgba(216,90,48,0.4),rgba(113,43,19,0.6));border-color:rgba(240,153,123,0.3);color:#f5c4b3;">
+        <i class="ti ti-door" aria-hidden="true"></i>
       </div>
-      <span class="aero-ext"><i class="ti ti-arrow-up-right"></i></span>
+      <div class="card-body">
+        <div class="card-label">Sistem Tempahan Bilik</div>
+        <div class="card-url">biliktempah.netlify.app</div>
+      </div>
+      <span class="arrow"><i class="ti ti-arrow-up-right" aria-hidden="true"></i></span>
     </a>
 
   </div>
 
-  <div class="aero-footer">Kuala Terengganu &middot; 2025</div>
+  <div class="footer">
+    <div class="footer-dot"></div>
+    <span class="footer-text">Kuala Terengganu &middot; 2025</span>
+    <div class="footer-dot"></div>
+  </div>
+
 </div>
 
 </body>
